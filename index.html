@@ -10,53 +10,66 @@
 
     <header>
         <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/valerieaudinay/d/refs/heads/main/SORONICE-SCRIPT.png" alt="Logo Soronice" class="logo">
-            <h1>Soronice Script</h1>
-        </div>
-        
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher des scripts, des jeux...">
+            <img src="https://raw.githubusercontent.com/valerieaudinay/d/refs/heads/main/SORONICE-SCRIPT.png" alt="Soronice Logo">
+            <span class="logo-text">SoroniceScript</span>
         </div>
 
         <nav>
-            <button class="nav-btn">Scripts</button>
-            <button class="nav-btn">Exploits</button>
-            <button class="theme-toggle" onclick="changerTheme()">🌙</button>
-
-            <button id="btn-login" class="nav-btn" onclick="ouvrirMenuAuth('login')">Connexion</button>
-            <button id="btn-register" class="nav-btn secondary-btn" onclick="ouvrirMenuAuth('register')">S'inscrire</button>
-
-            <button id="btn-favoris" class="nav-btn" style="display: none;">⭐ Favoris</button>
-            <button id="btn-upload-nav" class="nav-btn accent-btn" style="display: none;" onclick="ouvrirMenuUpload()">Upload Script</button>
-            <button id="btn-logout" class="nav-btn" style="display: none; color: #ff4d4d;" onclick="seDeconnecter()">Déconnexion</button>
+            <a href="#" class="active">🏠 Home</a>
+            <a href="upload.html">📤 Upload</a>
+            <a href="#">📈 Trending</a>
+            <a href="#">📜 Rules</a>
         </nav>
+
+        <div class="header-actions">
+            <button id="btn-login-header" class="auth-btn" onclick="ouvrirMenuAuth('login')">Connexion</button>
+            <button id="btn-register-header" class="auth-btn highlight" onclick="ouvrirMenuAuth('register')">S'inscrire</button>
+            
+            <button id="btn-favoris-header" class="auth-btn" style="display: none;">⭐ Favoris</button>
+            <button id="btn-logout-header" class="auth-btn danger" style="display: none;" onclick="seDeconnecter()">Déconnexion</button>
+
+            <button id="themeToggle" class="theme-btn">🌓</button>
+        </div>
     </header>
 
-    <main>
-        <section class="hero-section">
-            <h2 class="hero-title">Découvrez, partagez et créez des scripts...</h2>
-            <p class="hero-subtitle">La plateforme ultime pour les scripts Roblox.</p>
-            <div class="hero-buttons">
-                <button class="hero-btn accent-btn" onclick="ouvrirMenuUpload()">Upload Script</button>
-                <button class="hero-btn secondary-btn">Télécharger l'App</button>
-            </div>
-        </section>
+    <div class="stats-top">
+        <div><span class="stat-indicator stat-online"></span> <span id="real-online-users">...</span> Joueurs en ligne</div>
+        <div><span class="stat-indicator stat-guests"></span> <span id="real-total-scripts">...</span> Scripts disponibles</div>
+    </div>
 
-        <section class="stats-section">
-            <div class="stat-box">
-                <h3>Scripts</h3>
-                <p id="stat-scripts">200,612</p>
+    <div class="hero">
+        <h1>SoroniceScript</h1>
+        <p>Recherchez et partagez les meilleurs scripts Lua de la communauté !</p>
+
+        <div style="text-align: center; margin-bottom: 30px;">
+            <button class="hero-upload-btn" onclick="verifierEtOuvrirUpload()">📤 Créer / Publier un Script</button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Essaye 'admin'...">
+            <button class="search-btn">Rechercher</button>
+        </div>
+
+        <div class="strict-search">
+            <input type="checkbox" id="strict">
+            <label for="strict">Recherche stricte (mot exact)</label>
+        </div>
+
+        <div class="cards-container">
+            <div class="card">
+                <h3>👥 Communauté active</h3>
+                <p>Rejoignez des milliers de personnes qui partagent leur contenu !</p>
             </div>
-            <div class="stat-box">
-                <h3>Vues Totales</h3>
-                <p id="stat-views">176,140,891</p>
+            <div class="card">
+                <h3>📖 Collection immense</h3>
+                <p>Des tonnes de scripts ajoutés chaque jour, une variété infinie !</p>
             </div>
-            <div class="stat-box">
-                <h3>Utilisateurs</h3>
-                <p id="stat-users">185,200</p>
+            <div class="card">
+                <h3>🚀 Participez</h3>
+                <p>Vous avez un script ? Rejoignez-nous et publiez-le !</p>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <div id="modal-auth" class="modal-cache">
         <div class="modal-contenu auth-contenu">
@@ -67,65 +80,37 @@
                 <button id="tab-register" class="auth-tab" onclick="changerOngletAuth('register')">S'inscrire</button>
             </div>
 
-            <form id="form-login" onsubmit="seConnecter(event)">
+            <form id="form-login" onsubmit="validerConnexion(event)">
                 <div class="form-group">
-                    <label>Email ou Pseudo</label>
-                    <input type="text" placeholder="Entrez votre pseudo..." required>
+                    <label>Email</label>
+                    <input type="email" id="login-email" placeholder="votre@email.com" required>
                 </div>
                 <div class="form-group">
                     <label>Mot de passe</label>
-                    <input type="password" placeholder="••••••••" required>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
                 </div>
                 <button type="submit" class="submit-btn auth-submit">Se Connecter</button>
             </form>
 
-            <form id="form-register" style="display: none;" onsubmit="seConnecter(event)">
+            <form id="form-register" style="display: none;" onsubmit="validerInscription(event)">
                 <div class="form-group">
                     <label>Pseudo</label>
-                    <input type="text" placeholder="Votre nom d'utilisateur..." required>
+                    <input type="text" id="reg-username" placeholder="Nom d'utilisateur" required minlength="3">
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="votre@email.com" required>
+                    <input type="email" id="reg-email" placeholder="votre@email.com" required>
                 </div>
                 <div class="form-group">
                     <label>Mot de passe</label>
-                    <input type="password" placeholder="••••••••" required>
+                    <input type="password" id="reg-password" placeholder="Minimum 6 caractères" required minlength="6">
                 </div>
                 <button type="submit" class="submit-btn auth-submit">Créer mon compte</button>
             </form>
         </div>
     </div>
 
-    <div id="modal-upload" class="modal-cache">
-        <div class="modal-contenu">
-            <span class="fermer-modal" onclick="fermerMenuUpload()">×</span>
-            <h2 class="modal-title">Upload Script</h2>
-            <form id="formulaire-upload">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Title <span class="required">*</span></label>
-                        <input type="text" placeholder="Auto Farm, ESP, Aimbot..." required>
-                    </div>
-                    <div class="form-group">
-                        <label>Game <span class="required">*</span></label>
-                        <input type="text" placeholder="Search a game..." required>
-                    </div>
-                </div>
-                <div class="form-group full-width">
-                    <label>Cover Image</label>
-                    <input type="file" accept="image/*" required>
-                </div>
-                <div class="form-group full-width code-section">
-                    <label>Code <span class="required">*</span></label>
-                    <textarea class="code-editor" rows="6" placeholder='print("Hello World")' required></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">Publish Script</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div id="toast-container"></div>
 
     <script src="script.js"></script>
 </body>
