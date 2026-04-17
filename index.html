@@ -3,154 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soronice Script </title>
-    <link rel="stylesheet" href="style.css">
+    <title>Soronice Script</title>
+    <style>
+        /* === VARIABLES DE COULEURS === */
+        :root {
+            --bg-main: #181818;
+            --bg-secondary: #212121;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-blue: #3b82f6;
+            --border-color: #333333;
+        }
+
+        /* Thème clair (sera activé par le JS) */
+        .light-mode {
+            --bg-main: #f9fafb;
+            --bg-secondary: #ffffff;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* === HEADER (Navigation & Logo) === */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-container img {
+            width: 40px; /* Taille ajustée pour le header */
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* === STATISTIQUES (Sous le logo) === */
+        .stats-top {
+            padding: 10px 30px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .stat-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .stat-online { background-color: #10b981; }
+        .stat-guests { background-color: #3b82f6; }
+
+        /* === HERO SECTION (Recherche) === */
+        .hero {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            color: var(--accent-blue);
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Barre de recherche */
+        .search-container {
+            display: flex;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .search-container input {
+            flex-grow: 1;
+            background: none;
+            border: none;
+            padding: 15px 20px;
+            color: var(--text-main);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .strict-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* === INFO CARDS === */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
 
     <header>
         <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/valerieaudinay/d/refs/heads/main/SORONICE-SCRIPT.png" alt="Logo Soronice" class="logo">
-            <h1>Soronice Script </h1>
-        </div>
-        
-        <div class="search-bar">
-            <input type="text" placeholder="Search for scripts, games, or creators...">
+            <img src="https://raw.githubusercontent.com/valerieaudinay/d/refs/heads/main/SORONICE-SCRIPT.png" alt="Soronice Logo">
+            <span class="logo-text">SoroniceScript</span>
         </div>
 
         <nav>
-            <button class="nav-btn">Scripts</button>
-            <button class="nav-btn">Exploits</button>
-            <button class="nav-btn">Discord</button>
-            <button class="nav-btn accent-btn" onclick="ouvrirMenuUpload()">Upload Script</button>
-            <button class="theme-toggle" onclick="changerTheme()">🌙</button>
+            <a href="#" class="active">🏠 Home</a>
+            <a href="upload.html">📤 Upload</a>
+            <a href="#">📈 Trending</a>
+            <a href="#">📜 Rules</a>
         </nav>
+
+        <div class="header-actions">
+            <button id="themeToggle" class="theme-btn">🌓</button>
+            <div style="width: 30px; height: 30px; background: #333; border-radius: 50%;"></div> </div>
     </header>
 
-    <main>
-        <section class="hero-section">
-            <h2 class="hero-title">Discover, share and create scripts...</h2>
-            <p class="hero-subtitle">The ultimate platform for Roblox scripts.</p>
-            <div class="hero-buttons">
-                <button class="hero-btn primary-btn" onclick="ouvrirMenuUpload()">Upload Script</button>
-                <button class="hero-btn secondary-btn">Download App</button>
+    <div class="stats-top">
+        <div><span class="stat-indicator stat-online"></span> 332 Registered users online</div>
+        <div><span class="stat-indicator stat-guests"></span> 2632 Guests online</div>
+    </div>
+
+    <div class="hero">
+        <h1>SoroniceScript</h1>
+        <p>Search the best Lua scripts available in the community uploaded by users!</p>
+
+        <div class="search-container">
+            <input type="text" placeholder="Try 'admin'...">
+            <button class="search-btn">Search</button>
+        </div>
+
+        <div class="strict-search">
+            <input type="checkbox" id="strict">
+            <label for="strict">Strict search (match exact input)</label>
+        </div>
+
+        <div class="cards-container">
+            <div class="card">
+                <h3>👥 Active community</h3>
+                <p>Join hundreds of thousands of people already sharing their content!</p>
             </div>
-        </section>
-
-        <section class="stats-section">
-            <div class="stat-box">
-                <h3>Scripts</h3>
-                <p id="stat-scripts">200,612</p>
+            <div class="card">
+                <h3>📖 Extensive collection</h3>
+                <p>With tons of scripts uploaded every day, the variety is almost endless!</p>
             </div>
-            <div class="stat-box">
-                <h3>Total Views</h3>
-                <p id="stat-views">176,140,891</p>
+            <div class="card">
+                <h3>🚀 Bring your spin to the platform</h3>
+                <p>Have something to share? Join the ever-growing community, upload, and make your presence known!</p>
             </div>
-            <div class="stat-box">
-                <h3>Total Users</h3>
-                <p id="stat-users">185,200</p>
-            </div>
-        </section>
-    </main>
-
-    <div id="modal-upload" class="modal-cache">
-        <div class="modal-contenu">
-            <span class="fermer-modal" onclick="fermerMenuUpload()">×</span>
-            <h2 class="modal-title">Upload Script</h2>
-            
-            <form id="formulaire-upload">
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Title <span class="required">*</span></label>
-                        <input type="text" placeholder="Auto Farm, ESP, Aimbot..." required>
-                    </div>
-                    <div class="form-group">
-                        <label>Game <span class="required">*</span></label>
-                        <input type="text" placeholder="Search a game..." required>
-                    </div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Description <span class="required">*</span></label>
-                    <div class="rich-text-editor">
-                        <div class="toolbar">
-                            <button type="button"><b>B</b></button>
-                            <button type="button"><i>I</i></button>
-                            <button type="button"><u>U</u></button>
-                            <button type="button">🔗</button>
-                            <button type="button">📷</button>
-                            <button type="button">📄</button>
-                        </div>
-                        <textarea rows="5" placeholder="Write a detailed description of your script here..." required></textarea>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Features</label>
-                        <input type="text" placeholder="Add features (press Enter)">
-                    </div>
-                    <div class="form-group">
-                        <label>Tags</label>
-                        <input type="text" placeholder="Add tags (press Enter)">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>YouTube Video</label>
-                        <input type="url" placeholder="https://youtube.com/watch?v=...">
-                    </div>
-                    <div class="form-group toggle-group">
-                        <label>Require Key</label>
-                        <label class="switch">
-                            <input type="checkbox" id="key-toggle" onchange="toggleKeyLink()">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group full-width" id="key-link-group" style="display: none;">
-                    <label>Key Link</label>
-                    <input type="url" placeholder="https://linkvertise.com/...">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Type</label>
-                        <select>
-                            <option value="free">Free</option>
-                            <option value="paid">Paid</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Visibility</label>
-                        <select>
-                            <option value="public">Public</option>
-                            <option value="unlisted">Unlisted</option>
-                            <option value="private">Private</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group full-width code-section">
-                    <label>Code <span class="required">*</span></label>
-                    <textarea class="code-editor" rows="8" placeholder='print("Hello World")' required></textarea>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Commit Message <span class="required">*</span></label>
-                    <input type="text" placeholder="Initial release" required>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">Publish Script</button>
-                </div>
-            </form>
         </div>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>
