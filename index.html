@@ -15,91 +15,138 @@
         </div>
         
         <div class="search-bar">
-            <input type="text" placeholder="Rechercher un script, un jeu...">
+            <input type="text" placeholder="Search for scripts, games, or creators...">
         </div>
 
         <nav>
-            <button class="nav-btn">Accueil</button>
-            <button class="nav-btn">Trending</button>
-            <button class="nav-btn">Règles</button>
-            <button class="nav-btn upload-btn" onclick="ouvrirMenuUpload()">Publier</button>
+            <button class="nav-btn">Scripts</button>
+            <button class="nav-btn">Exploits</button>
+            <button class="nav-btn">Discord</button>
+            <button class="nav-btn accent-btn" onclick="ouvrirMenuUpload()">Upload Script</button>
             <button class="theme-toggle" onclick="changerTheme()">🌙</button>
         </nav>
     </header>
 
     <main>
         <section class="hero-section">
-            <h2>Trouvez et partagez les meilleurs scripts</h2>
-            <button class="main-upload-btn" onclick="ouvrirMenuUpload()">Créer / Publier un Script</button>
+            <h2 class="hero-title">Discover, share and create scripts...</h2>
+            <p class="hero-subtitle">The ultimate platform for Roblox scripts.</p>
+            <div class="hero-buttons">
+                <button class="hero-btn primary-btn" onclick="ouvrirMenuUpload()">Upload Script</button>
+                <button class="hero-btn secondary-btn">Download App</button>
+            </div>
         </section>
 
         <section class="stats-section">
             <div class="stat-box">
-                <h3>Scripts Disponibles</h3>
-                <p id="total-scripts">Chargement...</p>
+                <h3>Scripts</h3>
+                <p id="stat-scripts">200,612</p>
             </div>
             <div class="stat-box">
-                <h3>Joueurs en Ligne</h3>
-                <p id="online-users">Chargement...</p>
+                <h3>Total Views</h3>
+                <p id="stat-views">176,140,891</p>
+            </div>
+            <div class="stat-box">
+                <h3>Total Users</h3>
+                <p id="stat-users">185,200</p>
             </div>
         </section>
-
-        <section class="scripts-list">
-            <div class="script-card">
-                <img src="https://via.placeholder.com/300x150" alt="Image du script">
-                <h3>Auto-Farm Ultime</h3>
-                <p>Créé par Admin</p>
-            </div>
-            </section>
     </main>
 
     <div id="modal-upload" class="modal-cache">
         <div class="modal-contenu">
             <span class="fermer-modal" onclick="fermerMenuUpload()">×</span>
-            <h2>Mettre en ligne un Script</h2>
+            <h2 class="modal-title">Upload Script</h2>
             
             <form id="formulaire-upload">
-                <label>Titre</label>
-                <input type="text" placeholder="Nom de ton script" required>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Title <span class="required">*</span></label>
+                        <input type="text" placeholder="Auto Farm, ESP, Aimbot..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Game <span class="required">*</span></label>
+                        <input type="text" placeholder="Search a game..." required>
+                    </div>
+                </div>
 
-                <label>Jeu cible (ou Multiversel)</label>
-                <input type="text" placeholder="Ex: Blox Fruits, Arsenal, Universal...">
+                <div class="form-group full-width">
+                    <label>Description <span class="required">*</span></label>
+                    <div class="rich-text-editor">
+                        <div class="toolbar">
+                            <button type="button"><b>B</b></button>
+                            <button type="button"><i>I</i></button>
+                            <button type="button"><u>U</u></button>
+                            <button type="button">🔗</button>
+                            <button type="button">📷</button>
+                            <button type="button">📄</button>
+                        </div>
+                        <textarea rows="5" placeholder="Write a detailed description of your script here..." required></textarea>
+                    </div>
+                </div>
 
-                <label>Image de présentation</label>
-                <input type="file" accept="image/*" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Features</label>
+                        <input type="text" placeholder="Add features (press Enter)">
+                    </div>
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <input type="text" placeholder="Add tags (press Enter)">
+                    </div>
+                </div>
 
-                <label>Lien de la clé (Optionnel)</label>
-                <input type="url" placeholder="https://lien-de-ta-cle.com">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>YouTube Video</label>
+                        <input type="url" placeholder="https://youtube.com/watch?v=...">
+                    </div>
+                    <div class="form-group toggle-group">
+                        <label>Require Key</label>
+                        <label class="switch">
+                            <input type="checkbox" id="key-toggle" onchange="toggleKeyLink()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
 
-                <label>Lien Discord (Optionnel)</label>
-                <input type="url" placeholder="https://discord.gg/...">
+                <div class="form-group full-width" id="key-link-group" style="display: none;">
+                    <label>Key Link</label>
+                    <input type="url" placeholder="https://linkvertise.com/...">
+                </div>
 
-                <label>Description</label>
-                <textarea rows="4" placeholder="Explique ce que fait ton script..."></textarea>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select>
+                            <option value="free">Free</option>
+                            <option value="paid">Paid</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Visibility</label>
+                        <select>
+                            <option value="public">Public</option>
+                            <option value="unlisted">Unlisted</option>
+                            <option value="private">Private</option>
+                        </select>
+                    </div>
+                </div>
 
-                <label>Tags (Séparés par des virgules)</label>
-                <input type="text" placeholder="autofarm, esp, aimbot...">
+                <div class="form-group full-width code-section">
+                    <label>Code <span class="required">*</span></label>
+                    <textarea class="code-editor" rows="8" placeholder='print("Hello World")' required></textarea>
+                </div>
 
-                <label>Prix</label>
-                <select>
-                    <option value="gratuit">Gratuit</option>
-                    <option value="payant">Payant</option>
-                </select>
+                <div class="form-group full-width">
+                    <label>Commit Message <span class="required">*</span></label>
+                    <input type="text" placeholder="Initial release" required>
+                </div>
 
-                <label>Code du Script (Colle ton Lua ici)</label>
-                <textarea rows="6" placeholder="local Player = game.Players.LocalPlayer..." required></textarea>
-
-                <label>Commit Message (Mise à jour)</label>
-                <input type="text" placeholder="Ex: Sortie initiale, Correction de bugs...">
-
-                <label>Visibilité</label>
-                <select>
-                    <option value="public">Public (Tout le monde peut voir)</option>
-                    <option value="unlisted">Non répertorié (Lien direct uniquement)</option>
-                    <option value="private">Privé (Seulement toi)</option>
-                </select>
-
-                <button type="submit" class="submit-btn">Publier le Script</button>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Publish Script</button>
+                </div>
             </form>
         </div>
     </div>
