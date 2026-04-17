@@ -1,0 +1,209 @@
+/* Variables de couleurs de base (Mode sombre par défaut) */
+:root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --header-bg: #1e1e1e;
+    --card-bg: #252525;
+    --accent-color: #007bff;
+    --accent-hover: #0056b3;
+    --input-bg: #333;
+}
+
+/* Variables pour le Mode Clair (Jour) */
+.light-mode {
+    --bg-color: #f4f4f9;
+    --text-color: #121212;
+    --header-bg: #ffffff;
+    --card-bg: #e0e0e0;
+    --input-bg: #fff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Header et Logo */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--header-bg);
+    padding: 15px 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Recherche et Navigation */
+.search-bar input {
+    padding: 10px;
+    width: 300px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.nav-btn {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.upload-btn, .main-upload-btn, .submit-btn {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.upload-btn:hover, .main-upload-btn:hover, .submit-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Section Héro (Le milieu) */
+.hero-section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.main-upload-btn {
+    font-size: 18px;
+    padding: 15px 30px;
+    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+/* Statistiques */
+.stats-section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.stat-box {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 200px;
+    border: 1px solid #444;
+}
+
+.stat-box p {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Cartes des scripts (Agrandissement au survol) */
+.scripts-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.script-card {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* L'EFFET D'AGRANDISSEMENT DEMANDÉ */
+.script-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.script-card img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Fenêtre d'Upload (Modal) */
+.modal-cache {
+    display: none; 
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modal-contenu {
+    background-color: var(--card-bg);
+    margin: 5% auto;
+    padding: 30px;
+    width: 60%;
+    border-radius: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.fermer-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fermer-modal:hover {
+    color: red;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form input, form textarea, form select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
