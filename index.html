@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Hub de Scripts</title>
+    <style>
+        /* Variables pour le mode sombre par défaut */
+        :root {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --accent-color: #7289da; /* Couleur style Discord */
+            --border-color: #333;
+        }
+
+        /* Mode clair (qui sera activé par le JS plus tard) */
+        .light-mode {
+            --bg-color: #f4f4f9;
+            --container-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #ccc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            transition: 0.3s;
+        }
+
+        h1, h2, h3 { text-align: center; }
+
+        /* --- Section Statistiques --- */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: var(--container-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- Grille des Scripts (Trending) --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .script-card {
+            background-color: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* L'effet dont tu parlais : ça s'agrandit quand on passe la souris */
+        .script-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .script-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .tag {
+            background: var(--accent-color);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: white;
+        }
+
+        /* --- Formulaire d'upload --- */
+        .upload-section {
+            background-color: var(--container-bg);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label { margin-bottom: 5px; font-weight: bold; }
+        
+        input[type="text"], input[type="url"], select, textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        textarea { resize: vertical; min-height: 100px; }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .btn-submit:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+    <h1>🖥️ Mon Hub de Scripts</h1>
+
+    <div style="text-align: right;">
+        <button style="padding: 10px; cursor: pointer;">🌓 Changer de thème (Jour/Nuit)</button>
+    </div>
+
+    <div class="stats-bar">
+        <div>🟢 Utilisateurs en ligne : <strong>142</strong></div>
+        <div>👤 Membres totaux : <strong>10,453</strong></div>
+        <div>📜 Scripts publiés : <strong>3,890</strong></div>
+    </div>
+
+    <h2>🔥 Scripts en Tendance (Trending)</h2>
+    <div class="grid-container">
+        <div class="script-card">
+            <img src="https://via.placeholder.com/250x150/333/fff?text=Image+du+Jeu" alt="Aperçu du jeu">
+            <h3>Script Multiversel Pro</h3>
+            <p>Un script puissant qui marche sur plusieurs jeux avec plein de fonctionnalités.</p>
+            <span class="tag">Universel</span>
+            <span class="tag">Gratuit</span>
+        </div>
+        <div class="script-card">
+            <img src="https://via.placeholder.com/250x150/333/fff?text=Jeu+Specifique" alt="Aperçu du jeu">
+            <h3>Auto-Farm Simulator</h3>
+            <p>Le meilleur script pour farm en automatique sans rien faire.</p>
+            <span class="tag">Jeu Spécifique</span>
+            <span class="tag">Système de Clé</span>
+        </div>
+    </div>
+
+    <div class="upload-section">
+        <h2>➕ Publier un Script</h2>
+        <form>
+            <div class="form-group">
+                <label>Titre du script :</label>
+                <input type="text" placeholder="Ex: Auto-Farm, ESP, Aimbot...">
+            </div>
+
+            <div class="form-group">
+                <label>URL de l'image (Aperçu) :</label>
+                <input type="url" placeholder="Lien vers ton image...">
+            </div>
+
+            <div class="form-group">
+                <label>Type de script :</label>
+                <select>
+                    <option>Spécifique à un jeu (Game Specific)</option>
+                    <option>Multiversel / Universel</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Système de clé (Key System) :</label>
+                <select>
+                    <option>Non, pas de clé</option>
+                    <option>Oui, lien de la clé obligatoire</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Lien d'invitation Discord :</label>
+                <input type="url" placeholder="https://discord.gg/...">
+            </div>
+
+            <div class="form-group">
+                <label>Description du script :</label>
+                <textarea placeholder="Explique ce que fait ton script..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Le code du Script (Lua) :</label>
+                <textarea placeholder="loadstring(game:HttpGet('...'))()"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Tags (Séparés par des virgules) :</label>
+                <input type="text" placeholder="Auto-farm, UI, Hub...">
+            </div>
+
+            <div class="form-group">
+                <label>Commit Message (Mise à jour) :</label>
+                <input type="text" placeholder="Ex: Fix de l'auto-farm, nouvelle UI...">
+            </div>
+
+            <div class="form-group">
+                <label>Visibilité :</label>
+                <div>
+                    <input type="radio" name="privacy" checked> Public (Visible par tous) <br>
+                    <input type="radio" name="privacy"> Unlisted (Accessible uniquement via le lien) <br>
+                    <input type="radio" name="privacy"> Private (Visible uniquement par toi)
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit">Publier mon Script</button>
+        </form>
+    </div>
+
+</body>
+</html>
