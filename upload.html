@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload - Soronice Script</title>
+    <style>
+        /* === TES VARIABLES DE BASE === */
+        :root {
+            --bg-main: #181818;
+            --bg-secondary: #212121;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-blue: #3b82f6;
+            --border-color: #333333;
+            --danger: #ef4444;
+        }
+
+        .light-mode {
+            --bg-main: #f9fafb;
+            --bg-secondary: #ffffff;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* === TON HEADER EXACT === */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-container img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* === LE NOUVEAU FORMULAIRE D'UPLOAD === */
+        .upload-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .upload-container h1 {
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .required { color: var(--danger); }
+
+        input[type="text"], input[type="url"], select, textarea, input[type="file"] {
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: inherit;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent-blue);
+        }
+
+        /* Éditeur de texte stylé */
+        .rich-text-editor {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .toolbar {
+            background-color: var(--bg-main);
+            padding: 8px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 5px;
+        }
+
+        .toolbar button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .toolbar button:hover {
+            background-color: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .rich-text-editor textarea {
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            box-sizing: border-box;
+            background-color: var(--bg-secondary);
+        }
+
+        /* Zone de Code Noir */
+        .code-editor {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #0d0d0d !important;
+            color: #10b981 !important;
+            border-color: #333 !important;
+        }
+
+        /* Toggle Switch (Require Key) */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            height: 42px; /* Aligné avec les inputs */
+            box-sizing: border-box;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #555;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--accent-blue); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Bouton final */
+        .submit-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            float: right;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/valerieaudinay/d/refs/heads/main/SORONICE-SCRIPT.png" alt="Soronice Logo">
+            <span class="logo-text">SoroniceScript</span>
+        </div>
+
+        <nav>
+            <a href="index.html">🏠 Home</a>
+            <a href="upload.html" class="active">📤 Upload</a>
+            <a href="#">📈 Trending</a>
+            <a href="#">📜 Rules</a>
+        </nav>
+
+        <div class="header-actions">
+            <button id="themeToggle" class="theme-btn">🌓</button>
+            <div style="width: 30px; height: 30px; background: #333; border-radius: 50%;"></div>
+        </div>
+    </header>
+
+    <div class="upload-container">
+        <h1>Upload Script</h1>
+        
+        <form>
+            <div class="form-grid">
+                
+                <div class="form-group">
+                    <label>Title <span class="required">*</span></label>
+                    <input type="text" placeholder="Auto Farm, ESP, Aimbot..." required>
+                </div>
+                <div class="form-group">
+                    <label>Game <span class="required">*</span></label>
+                    <input type="text" placeholder="Search a game..." required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Cover Image <span class="required">*</span></label>
+                    <input type="file" accept="image/png, image/jpeg" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Description <span class="required">*</span></label>
+                    <div class="rich-text-editor">
+                        <div class="toolbar">
+                            <button type="button"><b>B</b></button>
+                            <button type="button"><i>I</i></button>
+                            <button type="button"><u>U</u></button>
+                            <button type="button">🔗</button>
+                            <button type="button">📄</button>
+                        </div>
+                        <textarea rows="6" placeholder="Write a detailed description..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Features</label>
+                    <input type="text" placeholder="Add features (press Enter)">
+                </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <input type="text" placeholder="Add tags (press Enter)">
+                </div>
+
+                <div class="form-group">
+                    <label>YouTube Video</label>
+                    <input type="url" placeholder="https://youtube.com/watch?v=...">
+                </div>
+                <div class="form-group">
+                    <label>Require Key</label>
+                    <div class="toggle-container">
+                        <span style="font-size: 14px; color: var(--text-muted);">Enable Key System</span>
+                        <label class="switch">
+                            <input type="checkbox" id="key-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group full-width" id="key-link-group" style="display: none;">
+                    <label>Key Link</label>
+                    <input type="url" placeholder="https://linkvertise.com/...">
+                </div>
+
+                <div class="form-group">
+                    <label>Type</label>
+                    <select>
+                        <option value="free">Free</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Visibility</label>
+                    <select>
+                        <option value="public">Public</option>
+                        <option value="unlisted">Unlisted</option>
+                        <option value="private">Private</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Code <span class="required">*</span></label>
+                    <textarea class="code-editor" rows="10" placeholder="-- Paste your Lua script here" required></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Commit Message <span class="required">*</span></label>
+                    <input type="text" placeholder="Initial release" required>
+                </div>
+
+                <div class="full-width">
+                    <button type="submit" class="submit-btn">Publish Script</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
