@@ -3,254 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soronice Script</title>
-    <style>
-        /* === VARIABLES DE COULEURS === */
-        :root {
-            --bg-main: #181818;
-            --bg-secondary: #212121;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-            --accent-blue: #3b82f6;
-            --border-color: #333333;
-        }
-
-        /* Thème clair (sera activé par le JS) */
-        .light-mode {
-            --bg-main: #f9fafb;
-            --bg-secondary: #ffffff;
-            --text-main: #111827;
-            --text-muted: #4b5563;
-            --border-color: #e5e7eb;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* === HEADER (Navigation & Logo) === */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background-color: var(--bg-main);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-container img {
-            width: 40px; /* Taille ajustée pour le header */
-            height: 40px;
-            border-radius: 8px;
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--text-main);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .theme-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        /* === STATISTIQUES (Sous le logo) === */
-        .stats-top {
-            padding: 10px 30px;
-            font-size: 12px;
-            color: var(--text-muted);
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .stat-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-        .stat-online { background-color: #10b981; }
-        .stat-guests { background-color: #3b82f6; }
-
-        /* === HERO SECTION (Recherche) === */
-        .hero {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .hero h1 {
-            color: var(--accent-blue);
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        /* Barre de recherche */
-        .search-container {
-            display: flex;
-            background-color: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .search-container input {
-            flex-grow: 1;
-            background: none;
-            border: none;
-            padding: 15px 20px;
-            color: var(--text-main);
-            font-size: 16px;
-            outline: none;
-        }
-
-        .search-btn {
-            background-color: var(--accent-blue);
-            color: white;
-            border: none;
-            padding: 0 25px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .strict-search {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        /* === INFO CARDS === */
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 50px;
-        }
-
-        .card {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        .card h3 {
-            margin: 0 0 10px 0;
-            font-size: 16px;
-        }
-
-        .card p {
-            margin: 0;
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-    </style>
+    <title>Soronice Script </title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/valerieaudinay/d/refs/heads/main/SORONICE-SCRIPT.png" alt="Soronice Logo">
-            <span class="logo-text">SoroniceScript</span>
+            <img src="https://raw.githubusercontent.com/valerieaudinay/d/refs/heads/main/SORONICE-SCRIPT.png" alt="Logo Soronice" class="logo">
+            <h1>Soronice Script </h1>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Rechercher un script, un jeu...">
         </div>
 
         <nav>
-            <a href="#" class="active">🏠 Home</a>
-            <a href="upload.html">📤 Upload</a>
-            <a href="#">📈 Trending</a>
-            <a href="#">📜 Rules</a>
+            <button class="nav-btn">Accueil</button>
+            <button class="nav-btn">Trending</button>
+            <button class="nav-btn">Règles</button>
+            <button class="nav-btn upload-btn" onclick="ouvrirMenuUpload()">Publier</button>
+            <button class="theme-toggle" onclick="changerTheme()">🌙</button>
         </nav>
-
-        <div class="header-actions">
-            <button id="themeToggle" class="theme-btn">🌓</button>
-            <div style="width: 30px; height: 30px; background: #333; border-radius: 50%;"></div> </div>
     </header>
 
-    <div class="stats-top">
-        <div><span class="stat-indicator stat-online"></span> 332 Registered users online</div>
-        <div><span class="stat-indicator stat-guests"></span> 2632 Guests online</div>
-    </div>
+    <main>
+        <section class="hero-section">
+            <h2>Trouvez et partagez les meilleurs scripts</h2>
+            <button class="main-upload-btn" onclick="ouvrirMenuUpload()">Créer / Publier un Script</button>
+        </section>
 
-    <div class="hero">
-        <h1>SoroniceScript</h1>
-        <p>Search the best Lua scripts available in the community uploaded by users!</p>
-
-        <div class="search-container">
-            <input type="text" placeholder="Try 'admin'...">
-            <button class="search-btn">Search</button>
-        </div>
-
-        <div class="strict-search">
-            <input type="checkbox" id="strict">
-            <label for="strict">Strict search (match exact input)</label>
-        </div>
-
-        <div class="cards-container">
-            <div class="card">
-                <h3>👥 Active community</h3>
-                <p>Join hundreds of thousands of people already sharing their content!</p>
+        <section class="stats-section">
+            <div class="stat-box">
+                <h3>Scripts Disponibles</h3>
+                <p id="total-scripts">Chargement...</p>
             </div>
-            <div class="card">
-                <h3>📖 Extensive collection</h3>
-                <p>With tons of scripts uploaded every day, the variety is almost endless!</p>
+            <div class="stat-box">
+                <h3>Joueurs en Ligne</h3>
+                <p id="online-users">Chargement...</p>
             </div>
-            <div class="card">
-                <h3>🚀 Bring your spin to the platform</h3>
-                <p>Have something to share? Join the ever-growing community, upload, and make your presence known!</p>
+        </section>
+
+        <section class="scripts-list">
+            <div class="script-card">
+                <img src="https://via.placeholder.com/300x150" alt="Image du script">
+                <h3>Auto-Farm Ultime</h3>
+                <p>Créé par Admin</p>
             </div>
+            </section>
+    </main>
+
+    <div id="modal-upload" class="modal-cache">
+        <div class="modal-contenu">
+            <span class="fermer-modal" onclick="fermerMenuUpload()">×</span>
+            <h2>Mettre en ligne un Script</h2>
+            
+            <form id="formulaire-upload">
+                <label>Titre</label>
+                <input type="text" placeholder="Nom de ton script" required>
+
+                <label>Jeu cible (ou Multiversel)</label>
+                <input type="text" placeholder="Ex: Blox Fruits, Arsenal, Universal...">
+
+                <label>Image de présentation</label>
+                <input type="file" accept="image/*" required>
+
+                <label>Lien de la clé (Optionnel)</label>
+                <input type="url" placeholder="https://lien-de-ta-cle.com">
+
+                <label>Lien Discord (Optionnel)</label>
+                <input type="url" placeholder="https://discord.gg/...">
+
+                <label>Description</label>
+                <textarea rows="4" placeholder="Explique ce que fait ton script..."></textarea>
+
+                <label>Tags (Séparés par des virgules)</label>
+                <input type="text" placeholder="autofarm, esp, aimbot...">
+
+                <label>Prix</label>
+                <select>
+                    <option value="gratuit">Gratuit</option>
+                    <option value="payant">Payant</option>
+                </select>
+
+                <label>Code du Script (Colle ton Lua ici)</label>
+                <textarea rows="6" placeholder="local Player = game.Players.LocalPlayer..." required></textarea>
+
+                <label>Commit Message (Mise à jour)</label>
+                <input type="text" placeholder="Ex: Sortie initiale, Correction de bugs...">
+
+                <label>Visibilité</label>
+                <select>
+                    <option value="public">Public (Tout le monde peut voir)</option>
+                    <option value="unlisted">Non répertorié (Lien direct uniquement)</option>
+                    <option value="private">Privé (Seulement toi)</option>
+                </select>
+
+                <button type="submit" class="submit-btn">Publier le Script</button>
+            </form>
         </div>
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
