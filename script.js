@@ -1,34 +1,4 @@
 // ==========================================
-// THÈME JOUR / NUIT (SAUVEGARDÉ)
-// ==========================================
-function changerTheme() {
-    let body = document.body;
-    body.classList.toggle("light-mode");
-    
-    let btnTheme = document.querySelector(".theme-toggle");
-    
-    if (body.classList.contains("light-mode")) {
-        btnTheme.textContent = "☀️";
-        localStorage.setItem("theme", "light");
-    } else {
-        btnTheme.textContent = "🌙";
-        localStorage.setItem("theme", "dark");
-    }
-}
-
-// Vérifier le thème au chargement de la page
-window.onload = function() {
-    let themeSauvegarde = localStorage.getItem("theme");
-    if (themeSauvegarde === "light") {
-        document.body.classList.add("light-mode");
-        document.querySelector(".theme-toggle").textContent = "☀️";
-    }
-    
-    // Lancer la récupération des statistiques
-    chargerStatistiques();
-};
-
-// ==========================================
 // GESTION DU MENU D'UPLOAD
 // ==========================================
 function ouvrirMenuUpload() {
@@ -39,7 +9,7 @@ function fermerMenuUpload() {
     document.getElementById("modal-upload").style.display = "none";
 }
 
-// Fermer le menu si on clique dans le vide (hors de la boîte)
+// Fermer le menu si on clique dans le vide
 window.onclick = function(event) {
     let modal = document.getElementById("modal-upload");
     if (event.target == modal) {
@@ -48,42 +18,44 @@ window.onclick = function(event) {
 }
 
 // ==========================================
-// SYSTÈME DE STATISTIQUES "RÉELLES"
+// GESTION DU BOUTON "REQUIRE KEY"
 // ==========================================
-function chargerStatistiques() {
-    let affichageScripts = document.getElementById("total-scripts");
-    let affichageJoueurs = document.getElementById("online-users");
-
-    /* POUR TON SERVEUR PYTHON :
-       Quand tu seras prêt à relier ça à ton serveur, tu effaceras le code en dessous
-       et tu utiliseras un truc comme ça :
-       
-       fetch("https://ton-serveur-python.com/api/stats")
-       .then(response => response.json())
-       .then(data => {
-           affichageScripts.textContent = data.total_scripts;
-           affichageJoueurs.textContent = data.joueurs_en_ligne;
-       });
-    */
-
-    // En attendant ton serveur, voici une simulation qui génère des nombres dynamiques
-    // basés sur l'heure, pour faire "vivre" le site.
+function toggleKeyLink() {
+    let checkBox = document.getElementById("key-toggle");
+    let keyLinkGroup = document.getElementById("key-link-group");
     
-    let baseScripts = 1245; // Le nombre de base de scripts
-    let baseJoueurs = 340;  // Le nombre de base de joueurs
-
-    // Met à jour les chiffres toutes les 5 secondes pour simuler du trafic
-    setInterval(() => {
-        // Ajoute un peu de hasard (les joueurs montent et descendent, les scripts augmentent lentement)
-        let joueursVariation = Math.floor(Math.random() * 15) - 5; // Entre -5 et +10
-        
-        baseJoueurs = Math.max(100, baseJoueurs + joueursVariation);
-        
-        affichageScripts.textContent = baseScripts.toLocaleString();
-        affichageJoueurs.textContent = baseJoueurs.toLocaleString();
-    }, 3000);
-
-    // Premier affichage immédiat
-    affichageScripts.textContent = baseScripts.toLocaleString();
-    affichageJoueurs.textContent = baseJoueurs.toLocaleString();
+    // Si la case est cochée, on affiche l'input pour mettre le lien
+    if (checkBox.checked == true) {
+        keyLinkGroup.style.display = "flex";
+    } else {
+        keyLinkGroup.style.display = "none";
+    }
 }
+
+// ==========================================
+// ANIMATION DES STATISTIQUES
+// ==========================================
+window.onload = function() {
+    // Si tu veux relier ça à ton serveur Python plus tard pour avoir 
+    // les vrais chiffres, c'est ici qu'il faudra le faire avec un "fetch".
+    
+    // Pour l'instant, on met les chiffres de ta capture d'écran 
+    // et on les fait bouger un tout petit peu pour simuler l'activité.
+    
+    let baseScripts = 200612;
+    let baseViews = 176140891;
+    let baseUsers = 185200;
+
+    let affichageScripts = document.getElementById("stat-scripts");
+    let affichageViews = document.getElementById("stat-views");
+    let affichageUsers = document.getElementById("stat-users");
+
+    setInterval(() => {
+        // Ajoute 1 vue aléatoirement
+        if(Math.random() > 0.5) baseViews += Math.floor(Math.random() * 5);
+        
+        affichageScripts.textContent = baseScripts.toLocaleString('en-US');
+        affichageViews.textContent = baseViews.toLocaleString('en-US');
+        affichageUsers.textContent = baseUsers.toLocaleString('en-US');
+    }, 2000);
+};
